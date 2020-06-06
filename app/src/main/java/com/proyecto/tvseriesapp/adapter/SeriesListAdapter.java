@@ -39,10 +39,10 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Se
 
         seriresHolder.txtScore.setText(seriesObj.get(position).getName());
         seriresHolder.showSerieImage(seriesObj.get(position).getImage());
-        seriresHolder.txtScore.setOnClickListener(new View.OnClickListener() {
+        seriresHolder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                detailListener.showDetails(seriesObj.get(position).getName(),seriesObj.get(position).getImage());
+                detailListener.showDetails(seriesObj.get(position).getName(),seriesObj.get(position));
             }
         });
     }
@@ -55,7 +55,7 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Se
     public class SeriresHolder extends RecyclerView.ViewHolder {
         TextView txtScore;
         ImageView serieImage;
-        Button btnCartMore, btnCartLess;
+        Button btnDetail;
         View mview;
 
         public SeriresHolder(@NonNull final View itemView) {
@@ -63,16 +63,17 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Se
             mview = itemView;
             txtScore = mview.findViewById(R.id.score_txt);
             serieImage = mview.findViewById(R.id.img_serie);
+            btnDetail = mview.findViewById(R.id.detail_btn);
         }
         public void showSerieImage(String url)
         {
-            Picasso.get().load(url).into(serieImage);
+            Picasso.get().load(url).placeholder(R.drawable.loader).into(serieImage);
         }
 
     }
 
     public interface onItemClickDetailListener {
-        void showDetails(String name, String image);
+        void showDetails(String name, Series serie);
     }
 
     public void setOnItemClickListener(onItemClickDetailListener onItemClickListener) {

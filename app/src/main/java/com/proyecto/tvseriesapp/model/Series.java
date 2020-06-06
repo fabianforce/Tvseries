@@ -6,11 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.proyecto.tvseriesapp.adapter.GenresListAdapter;
 import com.proyecto.tvseriesapp.adapter.SeriesListAdapter;
 import com.proyecto.tvseriesapp.interfaces.INetwork;
 import com.proyecto.tvseriesapp.interfaces.ITvSeriesHome;
 import com.proyecto.tvseriesapp.view.MainActivity;
+import com.proyecto.tvseriesapp.view.SeriesDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +27,15 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Series implements ITvSeriesHome.ModelHome {
     private ITvSeriesHome.PresenterHome iPresenter;
+    private ITvSeriesHome.DetailPresenter iDetailPresenter;
     private String score;
     private String name;
     private String image;
+    private String summary;
+    private JsonArray genres;
     private SeriesListAdapter seriesListAdapter;
     List<Series> seriesList;
+    List<String> genreList;
     String url = "";
 
     public Series()
@@ -36,16 +43,20 @@ public class Series implements ITvSeriesHome.ModelHome {
 
     }
 
-    public Series(String score, String name, String image) {
+    public Series(String score, String name, String image, String summary, JsonArray genres) {
         this.score = score;
         this.name = name;
         this.image = image;
+        this.summary = summary;
+        this.genres = genres;
     }
 
     public Series(ITvSeriesHome.PresenterHome presenterHome)
     {
         this.iPresenter = presenterHome;
     }
+
+    public Series(ITvSeriesHome.DetailPresenter detailPresenter){this.iDetailPresenter = detailPresenter;}
 
     public String getScore() {
         return score;
@@ -69,6 +80,22 @@ public class Series implements ITvSeriesHome.ModelHome {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public JsonArray getGenres() {
+        return genres;
+    }
+
+    public void setGenres(JsonArray genres) {
+        this.genres = genres;
     }
 
     @Override
@@ -106,17 +133,17 @@ public class Series implements ITvSeriesHome.ModelHome {
                             {
                                 url = jsonObject.get("show").getAsJsonObject().getAsJsonObject("image").get("medium").getAsString();
                             }
-                            Log.e("Maria" , jsonObject.get("show").getAsJsonObject().get("image")+"");
+                            //Log.e("Maria" , jsonObject.get("show").getAsJsonObject().get("image")+"");
 
-                            Series serie = new Series(jsonObject.get("score").getAsString(),jsonObject.get("show").getAsJsonObject().get("name").getAsString(),url);
+                            Series serie = new Series(jsonObject.get("score").getAsString(),jsonObject.get("show").getAsJsonObject().get("name").getAsString(),url,jsonObject.get("show").getAsJsonObject().get("summary").getAsString(),jsonObject.get("show").getAsJsonObject().get("genres").getAsJsonArray());
                             seriesList.add(i,serie);
-                            //Log.e("SCORE SERIRE" , jsonObject.get("show").getAsJsonObject().getAsJsonObject("image").get("medium")+"");
+                            Log.e("SCORE SERIRE" , jsonObject.get("show").getAsJsonObject().get("genres").getAsJsonArray()+"");
                         }
                         recyclerView.setAdapter(seriesListAdapter);
                         seriesListAdapter.setOnItemClickListener(new SeriesListAdapter.onItemClickDetailListener() {
                             @Override
-                            public void showDetails(String name, String image) {
-                                iPresenter.showInformacion(name);
+                            public void showDetails(String name, Series serie) {
+                                iPresenter.showInformacion(name,serie);
                             }
                         });
                     }
@@ -136,6 +163,21 @@ public class Series implements ITvSeriesHome.ModelHome {
     @Override
     public void setUpRecyclerViewSeries(RecyclerView recyclerView) {
 
+    }
+
+    @Override
+    public void SetUpRecyclerViewDetail(RecyclerView recyclerView , JsonArray genresArray) {
+        genreList = new ArrayList<>();
+        SeriesDetailsActivity seriesDetailsActivity = new SeriesDetailsActivity();
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(seriesDetailsActivity, LinearLayoutManager.HORIZONTAL,false);
+        final GenresListAdapter genreListAdapter = new GenresListAdapter(genreList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(mLayoutManager);
+        for (JsonElement e : genresArray) {
+            Log.e("ARRAY", e.getAsString() + "");
+            genreList.add(e.getAsString());
+        }
+        recyclerView.setAdapter(genreListAdapter);
     }
 
 

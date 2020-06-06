@@ -5,17 +5,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.proyecto.tvseriesapp.R;
 import com.proyecto.tvseriesapp.interfaces.INetwork;
 import com.proyecto.tvseriesapp.interfaces.ITvSeriesHome;
+import com.proyecto.tvseriesapp.model.Series;
 import com.proyecto.tvseriesapp.presenter.MainActivityPresenter;
+
+import java.io.Externalizable;
+import java.io.Serializable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,10 +56,11 @@ public class MainActivity extends AppCompatActivity implements ITvSeriesHome.Vie
     }
 
     @Override
-    public void showInformacion(String string) {
-        Toast.makeText(this , string , Toast.LENGTH_SHORT).show();
+    public void showInformacion(String string, Series serie) {
         Intent intent = new Intent(this, SeriesDetailsActivity.class);
-        intent.putExtra("name", string);
+        Gson gS = new Gson();
+        String target = gS.toJson(serie);
+        intent.putExtra("serieDetail" , target);
         startActivity(intent);
     }
 }

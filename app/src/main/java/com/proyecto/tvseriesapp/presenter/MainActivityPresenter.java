@@ -20,10 +20,10 @@ public class MainActivityPresenter implements ITvSeriesHome.PresenterHome {
     }
 
     @Override
-    public void showInformacion(String string) {
+    public void showInformacion(String string,Series serie) {
         if(iView!=null)
         {
-            iView.showInformacion(string);
+            iView.showInformacion(string,serie);
         }
     }
 

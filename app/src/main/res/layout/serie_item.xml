@@ -30,13 +30,18 @@
             android:layout_toRightOf="@+id/img_serie"
             android:layout_alignParentTop="true"
             android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/blackColor"
             />
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/person_age"
-            android:text="item"
+            android:layout_height="30dp"
+            android:id="@+id/detail_btn"
+            android:text="Details"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/button"
             android:layout_toRightOf="@+id/img_serie"
             android:layout_below="@+id/score_txt"
             />
