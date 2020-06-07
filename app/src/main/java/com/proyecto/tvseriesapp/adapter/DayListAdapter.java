@@ -13,17 +13,17 @@ import com.proyecto.tvseriesapp.R;
 
 import java.util.List;
 
-public class DayListAdapter  extends RecyclerView.Adapter<DayListAdapter.DayHolder> {
+public class DayListAdapter extends RecyclerView.Adapter<DayListAdapter.DayHolder> {
     List<String> dayList;
 
-    public DayListAdapter(List<String> dayList)
-    {
+    public DayListAdapter(List<String> dayList) {
         this.dayList = dayList;
     }
+
     @NonNull
     @Override
     public DayHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.day_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.day_item, parent, false);
         return new DayHolder(view);
     }
 

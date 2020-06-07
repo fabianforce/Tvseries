@@ -1,12 +1,14 @@
 package com.proyecto.tvseriesapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,9 +38,10 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class SeriesDetailsActivity extends AppCompatActivity implements ITvSeriesHome.DetailView {
     private ITvSeriesHome.DetailPresenter iPresenter;
-    TextView textViewName,textViewScore,textViewSummary,textViewTime;
+    TextView textViewName, textViewScore, textViewSummary, textViewTime;
     ImageView imageView;
-    RecyclerView genreRecyclerView,dayRecyclerView,seasonRecyclerView;
+    RecyclerView genreRecyclerView, dayRecyclerView, seasonRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,16 @@ public class SeriesDetailsActivity extends AppCompatActivity implements ITvSerie
         genreRecyclerView = findViewById(R.id.genre_recycler);
         dayRecyclerView = findViewById(R.id.day_recycler);
         seasonRecyclerView = findViewById(R.id.season_recycler);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        mToolbar.setTitle(getString(R.string.title_detail));
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = getIntent();
         Gson gS = new Gson();
@@ -62,20 +75,20 @@ public class SeriesDetailsActivity extends AppCompatActivity implements ITvSerie
         textViewSummary.setText(serie.getSummary());
         textViewTime.setText(serie.getSchedule().get("time").getAsString());
 
-        iPresenter.SetUpRecyclerViewDetail(genreRecyclerView,serie.getGenres());
-        iPresenter.SetUpRecyclerDays(dayRecyclerView,serie.getSchedule().get("days").getAsJsonArray());
-        iPresenter.getSeasons(seasonRecyclerView , serie.getId());
+        iPresenter.SetUpRecyclerViewDetail(genreRecyclerView, serie.getGenres());
+        iPresenter.SetUpRecyclerDays(dayRecyclerView, serie.getSchedule().get("days").getAsJsonArray());
+        iPresenter.getSeasons(seasonRecyclerView, serie.getId());
 
         //Log.e("ID SERIE" , serie.getId()+"");
 
     }
 
     @Override
-    public void showEpisodes(int seasonId,String name) {
+    public void showEpisodes(int seasonId, String name) {
         Intent intent = new Intent(this, EpisodesActivity.class);
-        Log.e("DIOS MIO" , name);
-        intent.putExtra("seasonId" , seasonId);
-        intent.putExtra("seasonName" , name);
+        Log.e("DIOS MIO", name);
+        intent.putExtra("seasonId", seasonId);
+        intent.putExtra("seasonName", name);
         startActivity(intent);
     }
 }

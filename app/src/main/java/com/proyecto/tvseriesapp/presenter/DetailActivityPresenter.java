@@ -9,43 +9,38 @@ import com.proyecto.tvseriesapp.model.Series;
 public class DetailActivityPresenter implements ITvSeriesHome.DetailPresenter {
 
     private ITvSeriesHome.DetailView iView;
-    private ITvSeriesHome.ModelHome iModel;
+    private ITvSeriesHome.HomeModel iModel;
 
-    public DetailActivityPresenter(ITvSeriesHome.DetailView view)
-    {
+    public DetailActivityPresenter(ITvSeriesHome.DetailView view) {
         this.iView = view;
         iModel = new Series(this);
     }
 
     @Override
-    public void showEpisodes(int seasonId,String name) {
-        if(iView!=null)
-        {
-            iView.showEpisodes(seasonId,name);
+    public void showEpisodes(int seasonId, String name) {
+        if (iView != null) {
+            iView.showEpisodes(seasonId, name);
         }
     }
 
     @Override
     public void SetUpRecyclerViewDetail(RecyclerView recyclerView, JsonArray genresArray) {
-        if(iView!=null)
-        {
-            iModel.SetUpRecyclerViewDetail(recyclerView,genresArray);
+        if (iView != null) {
+            iModel.SetUpRecyclerViewDetail(recyclerView, genresArray);
         }
     }
 
     @Override
     public void SetUpRecyclerDays(RecyclerView recyclerView, JsonArray daysArray) {
-        if(iView!=null)
-        {
-            iModel.SetUpRecyclerDays(recyclerView,daysArray);
+        if (iView != null) {
+            iModel.SetUpRecyclerDays(recyclerView, daysArray);
         }
     }
 
     @Override
     public void getSeasons(RecyclerView recyclerView, int id) {
-        if(iView!=null)
-        {
-            iModel.getSeasons(recyclerView,id);
+        if (iView != null) {
+            iModel.getSeasons(recyclerView, id);
         }
     }
 }

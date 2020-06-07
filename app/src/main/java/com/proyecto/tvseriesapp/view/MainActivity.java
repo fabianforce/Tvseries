@@ -1,6 +1,7 @@
 package com.proyecto.tvseriesapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -30,26 +32,54 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements ITvSeriesHome.ViewHome {
+public class MainActivity extends AppCompatActivity implements ITvSeriesHome.HomeView {
 
-    private ITvSeriesHome.PresenterHome iPresenter;
+    private ITvSeriesHome.HomePresenter iPresenter;
     RecyclerView recyclerViewSeries;
-    Button findByName;
+    Button lpaginationButton, rpaginationButton;
+    ImageButton findByName;
     EditText searchEditText;
+    int pageNumber = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         iPresenter = new MainActivityPresenter(this);
         recyclerViewSeries = findViewById(R.id.recyclerSerires);
-        iPresenter.getSeries(recyclerViewSeries,"girl");
+        iPresenter.getSeries(recyclerViewSeries, pageNumber);
         findByName = findViewById(R.id.clickfind);
         searchEditText = findViewById(R.id.mSearchName);
+        lpaginationButton = findViewById(R.id.lpagination_btn);
+        rpaginationButton = findViewById(R.id.rpagination_btn);
+
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        mToolbar.setTitle(getString(R.string.app_name));
 
         findByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iPresenter.getSeries(recyclerViewSeries,searchEditText.getText().toString());
+                iPresenter.getSeriesByName(recyclerViewSeries, searchEditText.getText().toString());
+            }
+        });
+
+        lpaginationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pageNumber -= 1;
+                if (pageNumber == 0) {
+                    pageNumber = 1;
+                }
+                iPresenter.getSeries(recyclerViewSeries, pageNumber);
+                Log.e("MENOR", pageNumber + "");
+            }
+        });
+        rpaginationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pageNumber += 1;
+                Log.e("mas ", pageNumber + "");
+                iPresenter.getSeries(recyclerViewSeries, pageNumber);
             }
         });
 
@@ -60,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements ITvSeriesHome.Vie
         Intent intent = new Intent(this, SeriesDetailsActivity.class);
         Gson gS = new Gson();
         String target = gS.toJson(serie);
-        intent.putExtra("serieDetail" , target);
+        intent.putExtra("serieDetail", target);
         startActivity(intent);
     }
 }

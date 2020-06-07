@@ -12,17 +12,17 @@ import com.proyecto.tvseriesapp.R;
 
 import java.util.List;
 
-public class GenresListAdapter  extends RecyclerView.Adapter<GenresListAdapter.GenreHolder> {
+public class GenresListAdapter extends RecyclerView.Adapter<GenresListAdapter.GenreHolder> {
     List<String> genreList;
 
-    public GenresListAdapter(List<String> genreList)
-    {
+    public GenresListAdapter(List<String> genreList) {
         this.genreList = genreList;
     }
+
     @NonNull
     @Override
     public GenreHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.genre_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.genre_item, parent, false);
         return new GenreHolder(view);
     }
 

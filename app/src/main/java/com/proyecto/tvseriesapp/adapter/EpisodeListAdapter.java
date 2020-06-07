@@ -14,23 +14,30 @@ import com.proyecto.tvseriesapp.model.Episode;
 
 import java.util.List;
 
-public class EpisodeListAdapter  extends RecyclerView.Adapter<EpisodeListAdapter.EpisodeHolder> {
+public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.EpisodeHolder> {
     List<Episode> episodeList;
+    private onItemClickEpisodeListener episodeListener;
 
-    public EpisodeListAdapter(List<Episode> episodeList)
-    {
+    public EpisodeListAdapter(List<Episode> episodeList) {
         this.episodeList = episodeList;
     }
+
     @NonNull
     @Override
     public EpisodeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.episode_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.episode_item, parent, false);
         return new EpisodeHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EpisodeHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EpisodeHolder holder, final int position) {
         holder.episodeTextView.setText(episodeList.get(position).getName());
+        holder.episodeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                episodeListener.showEpisodeInfo(episodeList.get(position));
+            }
+        });
     }
 
     @Override
@@ -48,5 +55,13 @@ public class EpisodeListAdapter  extends RecyclerView.Adapter<EpisodeListAdapter
             mview = itemView;
             episodeTextView = mview.findViewById(R.id.episode_txt);
         }
+    }
+
+    public interface onItemClickEpisodeListener {
+        void showEpisodeInfo(Episode episode);
+    }
+
+    public void setOnItemClickListener(onItemClickEpisodeListener onItemClickListener) {
+        this.episodeListener = onItemClickListener;
     }
 }

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Tvseriesapp</string>
+    <string name="title_detail">Details</string>
+    <string name="title_episode">Episodes</string>
     <string name="title_activity_episodes">EpisodesActivity</string>
     <string name="title_activity_episode">List of episodes</string>
 </resources>

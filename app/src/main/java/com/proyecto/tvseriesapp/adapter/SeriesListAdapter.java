@@ -22,15 +22,14 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Se
     List<Series> seriesObj;
     private onItemClickDetailListener detailListener;
 
-    public SeriesListAdapter(List<Series> seriesList)
-    {
+    public SeriesListAdapter(List<Series> seriesList) {
         this.seriesObj = seriesList;
     }
 
     @NonNull
     @Override
     public SeriresHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.serie_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.serie_item, parent, false);
         return new SeriresHolder(view);
     }
 
@@ -42,7 +41,7 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Se
         seriresHolder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                detailListener.showDetails(seriesObj.get(position).getName(),seriesObj.get(position));
+                detailListener.showDetails(seriesObj.get(position).getName(), seriesObj.get(position));
             }
         });
     }
@@ -65,8 +64,8 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Se
             serieImage = mview.findViewById(R.id.img_serie);
             btnDetail = mview.findViewById(R.id.detail_btn);
         }
-        public void showSerieImage(String url)
-        {
+
+        public void showSerieImage(String url) {
             Picasso.get().load(url).placeholder(R.drawable.loader).into(serieImage);
         }
 

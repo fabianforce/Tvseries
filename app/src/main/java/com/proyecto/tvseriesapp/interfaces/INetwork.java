@@ -14,12 +14,12 @@ import retrofit2.http.Url;
 
 public interface INetwork {
 
-    @FormUrlEncoded
-    @POST("search/shows")
-    Call<JsonArray> getSeriesId(@Field("q") String q);
+    @GET("shows")
+    Call<JsonArray> getSeries(@Query("page") int num);
 
     @GET("search/shows")
-    Call<JsonArray> getSeries(@Query("q") String q);
+    Call<JsonArray> getSeriesByName(@Query("q") String name);
+
 
     @GET()
     Call<JsonArray> getSeasonByID(@Url String url);

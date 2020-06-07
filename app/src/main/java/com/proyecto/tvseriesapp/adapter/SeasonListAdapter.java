@@ -21,25 +21,25 @@ public class SeasonListAdapter extends RecyclerView.Adapter<SeasonListAdapter.Se
     List<JsonObject> seasonList;
     private onItemClickSeasonListener seasonListener;
 
-    public SeasonListAdapter(List<JsonObject> seasonList)
-    {
+    public SeasonListAdapter(List<JsonObject> seasonList) {
         this.seasonList = seasonList;
     }
+
     @NonNull
     @Override
     public SeasonHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.season_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.season_item, parent, false);
         return new SeasonHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SeasonHolder holder, final int position) {
-        holder.seasonTextView.setText("Season "+seasonList.get(position).get("number").getAsString());
+        holder.seasonTextView.setText("Season " + seasonList.get(position).get("number").getAsString());
         holder.seasonTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                seasonListener.showEpisodes(seasonList.get(position).get("id").getAsInt(),"Season "+seasonList.get(position).get("number").getAsString());
+                seasonListener.showEpisodes(seasonList.get(position).get("id").getAsInt(), "Season " + seasonList.get(position).get("number").getAsString());
             }
         });
     }
@@ -62,7 +62,7 @@ public class SeasonListAdapter extends RecyclerView.Adapter<SeasonListAdapter.Se
     }
 
     public interface onItemClickSeasonListener {
-       void showEpisodes(int seasonId,String name);
+        void showEpisodes(int seasonId, String name);
     }
 
     public void setOnItemClickListener(onItemClickSeasonListener onItemClickListener) {

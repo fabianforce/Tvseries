@@ -3,24 +3,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
-    <EditText
-        android:padding="10dp"
-        android:hint="Search TV Serires..."
-        android:id="@+id/mSearchName"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/clickfind"></Button>
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/mSearchName"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter series name..."
+            android:singleLine="true"
+            android:textSize="20sp"
+            android:paddingRight="60dp"
+            />
+        <ImageButton
+            android:layout_marginLeft="-60dp"
+            style="?android:buttonBarButtonStyle"
+            android:paddingBottom="20dp"
+            android:id="@+id/clickfind"
+            android:src="@drawable/ic_search_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/custom_btn_left"
+            android:drawableRight="@drawable/ic_arrow_left_black_24dp"
+            android:id="@+id/lpagination_btn"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="2dp"
+            android:background="#f0f0f0" />
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/rpagination_btn"
+            android:background="@drawable/custom_btn_right"
+            android:drawableRight="@drawable/ic_arrow_right_black_24dp" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerSerires"

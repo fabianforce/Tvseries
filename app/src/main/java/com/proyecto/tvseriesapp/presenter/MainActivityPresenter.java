@@ -8,30 +8,34 @@ import com.proyecto.tvseriesapp.model.Series;
 
 import retrofit2.Call;
 
-public class MainActivityPresenter implements ITvSeriesHome.PresenterHome {
+public class MainActivityPresenter implements ITvSeriesHome.HomePresenter {
 
-    private ITvSeriesHome.ViewHome iView;
-    private ITvSeriesHome.ModelHome iModel;
+    private ITvSeriesHome.HomeView iView;
+    private ITvSeriesHome.HomeModel iModel;
 
-    public MainActivityPresenter(ITvSeriesHome.ViewHome view)
-    {
+    public MainActivityPresenter(ITvSeriesHome.HomeView view) {
         this.iView = view;
         iModel = new Series(this);
     }
 
     @Override
-    public void showInformacion(String string,Series serie) {
-        if(iView!=null)
-        {
-            iView.showInformacion(string,serie);
+    public void showInformacion(String string, Series serie) {
+        if (iView != null) {
+            iView.showInformacion(string, serie);
         }
     }
 
     @Override
-    public void getSeries(RecyclerView recyclerView,String id) {
-        if(iView!=null)
-        {
-            iModel.getSeries(recyclerView,id);
+    public void getSeries(RecyclerView recyclerView, int num) {
+        if (iView != null) {
+            iModel.getSeries(recyclerView, num);
+        }
+    }
+
+    @Override
+    public void getSeriesByName(RecyclerView recyclerView, String name) {
+        if (iView != null) {
+            iModel.getSeriesByName(recyclerView, name);
         }
     }
 
