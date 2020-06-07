@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="blackColor">#000000</color>
+    <color name="cardColor">#8BFFA5</color>
+    <color name="detailColor">#0DF1F1F1</color>
+    <color name="timeColor">#000000</color>
 </resources>

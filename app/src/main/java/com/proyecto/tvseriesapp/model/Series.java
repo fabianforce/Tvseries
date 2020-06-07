@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.proyecto.tvseriesapp.adapter.DayListAdapter;
 import com.proyecto.tvseriesapp.adapter.GenresListAdapter;
+import com.proyecto.tvseriesapp.adapter.SeasonListAdapter;
 import com.proyecto.tvseriesapp.adapter.SeriesListAdapter;
 import com.proyecto.tvseriesapp.interfaces.INetwork;
 import com.proyecto.tvseriesapp.interfaces.ITvSeriesHome;
@@ -28,14 +30,18 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class Series implements ITvSeriesHome.ModelHome {
     private ITvSeriesHome.PresenterHome iPresenter;
     private ITvSeriesHome.DetailPresenter iDetailPresenter;
+    private int id;
     private String score;
     private String name;
     private String image;
     private String summary;
     private JsonArray genres;
-    private SeriesListAdapter seriesListAdapter;
+    private JsonObject schedule;
+
     List<Series> seriesList;
     List<String> genreList;
+    List<String> daysList;
+    List<JsonObject> season;
     String url = "";
 
     public Series()
@@ -43,12 +49,14 @@ public class Series implements ITvSeriesHome.ModelHome {
 
     }
 
-    public Series(String score, String name, String image, String summary, JsonArray genres) {
+    public Series(int id, String score, String name, String image, String summary, JsonArray genres, JsonObject schedule) {
+        this.id = id;
         this.score = score;
         this.name = name;
         this.image = image;
         this.summary = summary;
         this.genres = genres;
+        this.schedule = schedule;
     }
 
     public Series(ITvSeriesHome.PresenterHome presenterHome)
@@ -94,8 +102,24 @@ public class Series implements ITvSeriesHome.ModelHome {
         return genres;
     }
 
+    public JsonObject getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(JsonObject schedule) {
+        this.schedule = schedule;
+    }
+
     public void setGenres(JsonArray genres) {
         this.genres = genres;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -133,11 +157,9 @@ public class Series implements ITvSeriesHome.ModelHome {
                             {
                                 url = jsonObject.get("show").getAsJsonObject().getAsJsonObject("image").get("medium").getAsString();
                             }
-                            //Log.e("Maria" , jsonObject.get("show").getAsJsonObject().get("image")+"");
-
-                            Series serie = new Series(jsonObject.get("score").getAsString(),jsonObject.get("show").getAsJsonObject().get("name").getAsString(),url,jsonObject.get("show").getAsJsonObject().get("summary").getAsString(),jsonObject.get("show").getAsJsonObject().get("genres").getAsJsonArray());
+                            Log.e("VAMOS" , jsonObject.get("show").getAsJsonObject().getAsJsonObject("schedule")+"");
+                            Series serie = new Series(jsonObject.get("show").getAsJsonObject().get("id").getAsInt(),jsonObject.get("score").getAsString(),jsonObject.get("show").getAsJsonObject().get("name").getAsString(),url,jsonObject.get("show").getAsJsonObject().get("summary").getAsString(),jsonObject.get("show").getAsJsonObject().get("genres").getAsJsonArray(),jsonObject.get("show").getAsJsonObject().getAsJsonObject("schedule"));
                             seriesList.add(i,serie);
-                            Log.e("SCORE SERIRE" , jsonObject.get("show").getAsJsonObject().get("genres").getAsJsonArray()+"");
                         }
                         recyclerView.setAdapter(seriesListAdapter);
                         seriesListAdapter.setOnItemClickListener(new SeriesListAdapter.onItemClickDetailListener() {
@@ -156,13 +178,6 @@ public class Series implements ITvSeriesHome.ModelHome {
                 Log.e("response fail",t.getMessage()+"");
             }
         });
-        //iPresenter.showInformacion(id);
-
-    }
-
-    @Override
-    public void setUpRecyclerViewSeries(RecyclerView recyclerView) {
-
     }
 
     @Override
@@ -174,10 +189,75 @@ public class Series implements ITvSeriesHome.ModelHome {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(mLayoutManager);
         for (JsonElement e : genresArray) {
-            Log.e("ARRAY", e.getAsString() + "");
             genreList.add(e.getAsString());
         }
         recyclerView.setAdapter(genreListAdapter);
+    }
+
+    @Override
+    public void SetUpRecyclerDays(RecyclerView recyclerView, JsonArray daysArray) {
+        daysList = new ArrayList<>();
+        SeriesDetailsActivity seriesDetailsActivity = new SeriesDetailsActivity();
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(seriesDetailsActivity, LinearLayoutManager.HORIZONTAL,false);
+        final DayListAdapter dayListAdapter = new DayListAdapter(daysList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(mLayoutManager);
+        for (JsonElement e : daysArray) {
+            daysList.add(e.getAsString());
+        }
+        recyclerView.setAdapter(dayListAdapter);
+
+    }
+
+    @Override
+    public void getSeasons(final RecyclerView recyclerView, int id) {
+
+        season = new ArrayList<>();
+        SeriesDetailsActivity seriesDetailsActivity = new SeriesDetailsActivity();
+        //setUp Series Recyclerview
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(seriesDetailsActivity);
+        final SeasonListAdapter seasonListAdapter = new SeasonListAdapter(season);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://api.tvmaze.com/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        INetwork tvApi = retrofit.create(INetwork.class);
+
+        Call<JsonArray> call1 = tvApi.getSeasonByID("shows/"+id+"/seasons");
+        call1.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+
+                if(response.isSuccessful()) {
+                    if (response.body() != null) {
+
+                        season.clear();
+                        for (int i = 0; i < response.body().size(); i++) {
+
+                            JsonObject jsonObject = response.body().get(i).getAsJsonObject();
+                            season.add(i,jsonObject);
+                            Log.e("HOTA" , jsonObject +"");
+                        }
+
+                        recyclerView.setAdapter(seasonListAdapter);
+                        seasonListAdapter.setOnItemClickListener(new SeasonListAdapter.onItemClickSeasonListener() {
+                            @Override
+                            public void showEpisodes(int seasonId,String name) {
+                                iDetailPresenter.showEpisodes(seasonId,name);
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+            }
+        });
     }
 
 

@@ -35,10 +35,4 @@ public class MainActivityPresenter implements ITvSeriesHome.PresenterHome {
         }
     }
 
-    @Override
-    public void setUpRecyclerViewSeries(RecyclerView recyclerView) {
-        if (iView != null) {
-            iModel.setUpRecyclerViewSeries(recyclerView);
-        }
-    }
 }

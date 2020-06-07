@@ -19,24 +19,42 @@ public interface ITvSeriesHome {
     {
         void showInformacion(String string, Series serie);
         void getSeries(RecyclerView recyclerView,String id);
-        void setUpRecyclerViewSeries(RecyclerView recyclerView);
     }
     interface ModelHome
     {
         void getSeries(RecyclerView recyclerView,String id);
-        void setUpRecyclerViewSeries(RecyclerView recyclerView);
         void SetUpRecyclerViewDetail(RecyclerView recyclerView,JsonArray genresArray);
+        void SetUpRecyclerDays(RecyclerView recyclerView, JsonArray daysArray);
+        void getSeasons(RecyclerView recyclerView, int id);
 
     }
 
     interface DetailView
     {
-        void showInformacion(String string,Series serie);
+        void showEpisodes(int seasonId,String name);
     }
     interface DetailPresenter
     {
-        void showInformacion(String string,Series serie);
+        void showEpisodes(int seasonId,String name);
         void SetUpRecyclerViewDetail(RecyclerView recyclerView,JsonArray genresArray);
+        void SetUpRecyclerDays(RecyclerView recyclerView, JsonArray daysArray);
+        void getSeasons(RecyclerView recyclerView, int id);
+    }
+
+
+    interface EpisodeView
+    {
+
+    }
+
+    interface EpisodePresenter
+    {
+        void getEpisodes(RecyclerView recyclerView,int seasonId);
+    }
+
+    interface EpisodeModel
+    {
+        void getEpisodes(RecyclerView recyclerView,int seasonId);
     }
 
 }

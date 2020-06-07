@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface INetwork {
 
@@ -20,4 +21,9 @@ public interface INetwork {
     @GET("search/shows")
     Call<JsonArray> getSeries(@Query("q") String q);
 
+    @GET()
+    Call<JsonArray> getSeasonByID(@Url String url);
+
+    @GET()
+    Call<JsonArray> getEpisodesByID(@Url String url);
 }

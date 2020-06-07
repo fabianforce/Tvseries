@@ -18,10 +18,10 @@ public class DetailActivityPresenter implements ITvSeriesHome.DetailPresenter {
     }
 
     @Override
-    public void showInformacion(String string, Series serie) {
+    public void showEpisodes(int seasonId,String name) {
         if(iView!=null)
         {
-            iView.showInformacion(string,serie);
+            iView.showEpisodes(seasonId,name);
         }
     }
 
@@ -30,6 +30,22 @@ public class DetailActivityPresenter implements ITvSeriesHome.DetailPresenter {
         if(iView!=null)
         {
             iModel.SetUpRecyclerViewDetail(recyclerView,genresArray);
+        }
+    }
+
+    @Override
+    public void SetUpRecyclerDays(RecyclerView recyclerView, JsonArray daysArray) {
+        if(iView!=null)
+        {
+            iModel.SetUpRecyclerDays(recyclerView,daysArray);
+        }
+    }
+
+    @Override
+    public void getSeasons(RecyclerView recyclerView, int id) {
+        if(iView!=null)
+        {
+            iModel.getSeasons(recyclerView,id);
         }
     }
 }
