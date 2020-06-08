@@ -155,7 +155,7 @@ public class Series implements ITvSeriesHome.HomeModel {
                                 summaryText = "------";
                             } else {
                                 url = jsonObject.getAsJsonObject("image").get("medium").getAsString();
-                                summaryText = jsonObject.get("summary").getAsString();
+                                summaryText = jsonObject.get("summary").toString();
                             }
                             Series serie = new Series(jsonObject.get("id").getAsInt(), jsonObject.get("language").getAsString(), jsonObject.get("name").getAsString(), url, summaryText, jsonObject.get("genres").getAsJsonArray(), jsonObject.getAsJsonObject("schedule"));
                             seriesList.add(i, serie);
@@ -164,7 +164,7 @@ public class Series implements ITvSeriesHome.HomeModel {
                         seriesListAdapter.setOnItemClickListener(new SeriesListAdapter.onItemClickDetailListener() {
                             @Override
                             public void showDetails(String name, Series serie) {
-                                iPresenter.showInformacion(name, serie);
+                                iPresenter.showSerieDetail(name, serie);
                             }
                         });
                     }
@@ -294,7 +294,7 @@ public class Series implements ITvSeriesHome.HomeModel {
                         seriesListAdapter.setOnItemClickListener(new SeriesListAdapter.onItemClickDetailListener() {
                             @Override
                             public void showDetails(String name, Series serie) {
-                                iPresenter.showInformacion(name,serie);
+                                iPresenter.showSerieDetail(name,serie);
                             }
                         });
                     }

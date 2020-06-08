@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -38,7 +40,9 @@ public class MainActivity extends AppCompatActivity implements ITvSeriesHome.Hom
     RecyclerView recyclerViewSeries;
     Button lpaginationButton, rpaginationButton;
     ImageButton findByName;
+    ImageView personImageButton;
     EditText searchEditText;
+    TextView pageTextView;
     int pageNumber = 1;
 
     @Override
@@ -52,10 +56,25 @@ public class MainActivity extends AppCompatActivity implements ITvSeriesHome.Hom
         searchEditText = findViewById(R.id.mSearchName);
         lpaginationButton = findViewById(R.id.lpagination_btn);
         rpaginationButton = findViewById(R.id.rpagination_btn);
-
+        pageTextView = findViewById(R.id.numpage_txt);
+        pageTextView.setText(String.valueOf(pageNumber));
+        personImageButton = findViewById(R.id.person_btn);
         Toolbar mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitle(getString(R.string.app_name));
+        setUpView();
 
+    }
+
+    @Override
+    public void showSerieDetail(String string, Series serie) {
+        Intent intent = new Intent(this, SeriesDetailsActivity.class);
+        Gson gS = new Gson();
+        String target = gS.toJson(serie);
+        intent.putExtra("serieDetail", target);
+        startActivity(intent);
+    }
+
+    public void setUpView() {
         findByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,27 +89,24 @@ public class MainActivity extends AppCompatActivity implements ITvSeriesHome.Hom
                 if (pageNumber == 0) {
                     pageNumber = 1;
                 }
+                pageTextView.setText(String.valueOf(pageNumber));
                 iPresenter.getSeries(recyclerViewSeries, pageNumber);
-                Log.e("MENOR", pageNumber + "");
             }
         });
         rpaginationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pageNumber += 1;
-                Log.e("mas ", pageNumber + "");
+                pageTextView.setText(String.valueOf(pageNumber));
                 iPresenter.getSeries(recyclerViewSeries, pageNumber);
             }
         });
-
-    }
-
-    @Override
-    public void showInformacion(String string, Series serie) {
-        Intent intent = new Intent(this, SeriesDetailsActivity.class);
-        Gson gS = new Gson();
-        String target = gS.toJson(serie);
-        intent.putExtra("serieDetail", target);
-        startActivity(intent);
+        personImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PeopleActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -38,7 +38,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class SeriesDetailsActivity extends AppCompatActivity implements ITvSeriesHome.DetailView {
     private ITvSeriesHome.DetailPresenter iPresenter;
-    TextView textViewName, textViewScore, textViewSummary, textViewTime;
+    TextView textViewName, textViewSummary, textViewTime;
     ImageView imageView;
     RecyclerView genreRecyclerView, dayRecyclerView, seasonRecyclerView;
 
@@ -47,7 +47,6 @@ public class SeriesDetailsActivity extends AppCompatActivity implements ITvSerie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series_details);
         iPresenter = new DetailActivityPresenter(this);
-        textViewScore = findViewById(R.id.score_text);
         textViewName = findViewById(R.id.name_text);
         imageView = findViewById(R.id.img_detail_de);
         textViewSummary = findViewById(R.id.summary_text);
@@ -71,15 +70,12 @@ public class SeriesDetailsActivity extends AppCompatActivity implements ITvSerie
         Series serie = gS.fromJson(intent.getStringExtra("serieDetail"), Series.class);
         Picasso.get().load(serie.getImage()).into(imageView);
         textViewName.setText(serie.getName());
-        textViewScore.setText(serie.getScore());
         textViewSummary.setText(serie.getSummary());
         textViewTime.setText(serie.getSchedule().get("time").getAsString());
 
         iPresenter.SetUpRecyclerViewDetail(genreRecyclerView, serie.getGenres());
         iPresenter.SetUpRecyclerDays(dayRecyclerView, serie.getSchedule().get("days").getAsJsonArray());
         iPresenter.getSeasons(seasonRecyclerView, serie.getId());
-
-        //Log.e("ID SERIE" , serie.getId()+"");
 
     }
 

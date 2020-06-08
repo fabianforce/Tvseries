@@ -1,50 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView android:id="@+id/recyclerSerires"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recyclerSerires"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/cardview_shadow_end_color"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    app:cardBackgroundColor="#75E0E8FF">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        >
+        android:padding="16dp">
 
         <ImageView
+            android:id="@+id/img_serie"
             android:layout_width="120dp"
             android:layout_height="130dp"
-            android:id="@+id/img_serie"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="16dp"
-            />
+            android:layout_marginRight="16dp" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/score_txt"
-            android:text="item"
-            android:layout_toRightOf="@+id/img_serie"
             android:layout_alignParentTop="true"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/blackColor"
-            />
+            android:layout_toRightOf="@+id/img_serie"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/namef_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="@color/cardview_dark_background" />
+
+            <TextView
+                android:id="@+id/score_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="item"
+                android:textColor="@color/blackColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
 
         <Button
+            android:id="@+id/detail_btn"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:id="@+id/detail_btn"
-            android:text="Details"
-            android:textAllCaps="false"
+            android:layout_below="@+id/linear"
             android:layout_marginTop="5dp"
-            android:background="@drawable/button"
             android:layout_toRightOf="@+id/img_serie"
-            android:layout_below="@+id/score_txt"
-            />
+            android:background="@drawable/button"
+            android:text="Details"
+            android:textAllCaps="false" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

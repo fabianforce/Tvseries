@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.proyecto.tvseriesapp.R;
@@ -32,7 +33,7 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
     @Override
     public void onBindViewHolder(@NonNull EpisodeHolder holder, final int position) {
         holder.episodeTextView.setText(episodeList.get(position).getName());
-        holder.episodeTextView.setOnClickListener(new View.OnClickListener() {
+        holder.episodeCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 episodeListener.showEpisodeInfo(episodeList.get(position));
@@ -49,11 +50,13 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
 
         View mview;
         TextView episodeTextView;
+        CardView episodeCardView;
 
         public EpisodeHolder(@NonNull View itemView) {
             super(itemView);
             mview = itemView;
             episodeTextView = mview.findViewById(R.id.episode_txt);
+            episodeCardView = mview.findViewById(R.id.episode_card);
         }
     }
 

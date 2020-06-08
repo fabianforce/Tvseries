@@ -17,8 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Success"
+            android:textColor="@color/blackColor"
+            android:textStyle="bold"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+            android:textSize="20sp"/>
 
         <ImageView
             android:id="@+id/serie_img"

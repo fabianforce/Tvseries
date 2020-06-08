@@ -4,4 +4,6 @@
     <string name="title_episode">Episodes</string>
     <string name="title_activity_episodes">EpisodesActivity</string>
     <string name="title_activity_episode">List of episodes</string>
+    <string name="title_main_activity">Android Challenge</string>
+    <string name="title_people_activity">People</string>
 </resources>

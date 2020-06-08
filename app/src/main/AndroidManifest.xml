@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.EpisodesActivity"></activity>
+        <activity android:name=".view.PeopleActivity"></activity>
+        <activity android:name=".view.EpisodesActivity" />
         <activity android:name=".view.SeriesDetailsActivity" />
         <activity android:name=".view.MainActivity">
             <intent-filter>

@@ -20,6 +20,9 @@ public interface INetwork {
     @GET("search/shows")
     Call<JsonArray> getSeriesByName(@Query("q") String name);
 
+    @GET("search/people")
+    Call<JsonArray> getPeopleByName(@Query("q") String name);
+
 
     @GET()
     Call<JsonArray> getSeasonByID(@Url String url);

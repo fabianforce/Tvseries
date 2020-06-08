@@ -7,4 +7,5 @@
     <color name="cardColor">#8BFFA5</color>
     <color name="detailColor">#0DF1F1F1</color>
     <color name="timeColor">#000000</color>
+    <color name="bgColor">#759FA8DA</color>
 </resources>

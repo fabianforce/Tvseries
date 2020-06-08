@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="3dp">
+    android:layout_marginRight="3dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/blackColor"
+        android:textColor="#fff"
         android:text="Episodo"
         android:textAlignment="center"
         android:padding="8dp"
         android:textSize="18sp"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
         android:background="@drawable/scustom_text"
         android:id="@+id/season_name_txt"/>
 

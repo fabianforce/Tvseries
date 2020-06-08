@@ -13,11 +13,11 @@ import retrofit2.http.POST;
 
 public interface ITvSeriesHome {
     interface HomeView {
-        void showInformacion(String string, Series serie);
+        void showSerieDetail(String string, Series serie);
     }
 
     interface HomePresenter {
-        void showInformacion(String string, Series serie);
+        void showSerieDetail(String string, Series serie);
 
         void getSeries(RecyclerView recyclerView, int num);
 
@@ -64,6 +64,18 @@ public interface ITvSeriesHome {
 
     interface EpisodeModel {
         void getEpisodes(RecyclerView recyclerView, int seasonId);
+    }
+
+    interface PeopleView {
+
+    }
+
+    interface PeoplePresenter {
+        void findPeople(RecyclerView recyclerView, String name);
+    }
+
+    interface PeopleModel {
+        void findPeople(RecyclerView recyclerView, String name);
     }
 
 }
